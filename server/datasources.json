@@ -7,7 +7,7 @@
     "host": "localhost",
     "port": 27017,
     "url": "",
-    "database": "dms",
+    "database": "ich",
     "password": "",
     "name": "mongoDs",
     "user": "",
