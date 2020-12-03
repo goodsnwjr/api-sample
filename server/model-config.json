@@ -59,52 +59,7 @@
     "dataSource": "mongoDs",
     "public": false
   },
-  "event": {
-    "dataSource": "mongoDs",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "create": true,
-          "find": true,
-          "count": true,
-          "prototype.patchAttributes": true,
-          "deleteById": true,
-          "timeTable": true
-        }
-      }
-    }
-  },
-  "cmd": {
-    "dataSource": "mongoDs",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "dismissroom": true,
-          "dismissroomBySessionId": true
-        }
-      }
-    }
-  },
-  "calendar": {
-    "dataSource": "mongoDs",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": true,
-          "create": true,
-          "find": true,
-          "prototype.patchAttributes": true,
-          "deleteById": true
-        }
-      }
-    }
-  },
-  "schedule": {
+  "board": {
     "dataSource": "mongoDs",
     "public": true,
     "options": {

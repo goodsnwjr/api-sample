@@ -1,5 +1,5 @@
 {
-  "name": "event",
+  "name": "board",
   "base": "PersistedModel",
   "idInjection": true,
   "hidden": [],

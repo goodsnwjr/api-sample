@@ -1,8 +1,9 @@
 'use strict';
 
-module.exports = Calendar => {
+module.exports = (Board) => {
+  const app = require('../../server/server');
 
-  Calendar.observe('before save', function(context, next) {
+  Board.observe('before save', function (context, next) {
     const updatedDate = new Date();
 
     if (context.instance) {
@@ -25,7 +26,10 @@ module.exports = Calendar => {
     return next();
   });
 
-  Calendar.beforeRemote('find', function(context, modelInstance, next) {
+  Board.beforeRemote('find', function (context, modelInstance, next) {
+    const owner = context.req.userInfo,
+      ownerId = owner ? owner.ownerId || owner.id.toString() : undefined;
+
     if (!context.args.filter) {
       context.args.filter = {};
     }
@@ -34,7 +38,7 @@ module.exports = Calendar => {
       if (context.args.filter.where.and) {
         context.args.filter.where.and.push({
           status: { neq: 'deleted' },
-          ownerId: context.req.userInfo.ownerId || context.req.userInfo.id.toString()
+          ownerId: ownerId,
         });
       } else {
         context.args.filter.where = {
@@ -42,43 +46,22 @@ module.exports = Calendar => {
             context.args.filter.where,
             {
               status: { neq: 'deleted' },
-              ownerId: context.req.userInfo.ownerId || context.req.userInfo.id.toString()
-            }
-          ]
+              ownerId: ownerId,
+            },
+          ],
         };
       }
     } else {
       context.args.filter['where'] = {
         status: { neq: 'deleted' },
-        ownerId: context.req.userInfo.ownerId || context.req.userInfo.id.toString()
+        ownerId: ownerId,
       };
     }
 
     return next();
   });
 
-  Calendar.beforeRemote('count', function(context, modelInstance, next) {
-    if (context.args.where && context.args.where.and) {
-      context.args.where.and.push({
-        status: { neq: 'deleted' },
-        ownerId: context.req.userInfo.ownerId || context.req.userInfo.id.toString()
-      });
-    } else {
-      context.args.where = {
-        and: [
-          context.args.where,
-          {
-            status: { neq: 'deleted' },
-            ownerId: context.req.userInfo.ownerId || context.req.userInfo.id.toString()
-          }
-        ]
-      };
-    }
-
-    return next();
-  });
-
-  Calendar.beforeRemote('create', function(context, modelInstance, next) {
+  Board.beforeRemote('create', function (context, modelInstance, next) {
     context.args.data.ownerId = context.req.userInfo.id.toString();
     return next();
   });
