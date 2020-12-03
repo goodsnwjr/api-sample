@@ -1,0 +1,11 @@
+.ant-input[disabled],
+.ant-picker.ant-picker-disabled,
+.ant-picker-input > input[disabled] {
+  border-color: transparent;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.65);
+  padding-left: 0;
+}
+.ant-picker.ant-picker-disabled .ant-picker-suffix{
+  display: none;
+}

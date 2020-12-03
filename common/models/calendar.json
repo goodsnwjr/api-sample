@@ -1,0 +1,22 @@
+{
+  "name": "calendar",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "hidden": [],
+  "options": {
+    "validateUpsert": true,
+    "strictObjectIDCoercion": true,
+    "allowEternalTokens": true
+  },
+  "properties": {
+    "created": {
+      "type": "date",
+      "required": false
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+  ],
+  "methods": {}
+}

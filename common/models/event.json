@@ -1,0 +1,59 @@
+{
+  "name": "event",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "hidden": [],
+  "options": {
+    "validateUpsert": true,
+    "strictObjectIDCoercion": true,
+    "allowEternalTokens": true
+  },
+  "properties": {
+    "created": {
+      "type": "date",
+      "required": false
+    },
+    "start": {
+      "type": "date",
+      "required": false
+    },
+    "end": {
+      "type": "date",
+      "required": false
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+  ],
+  "methods": {
+    "timeTable": {
+      "accepts": [
+        {
+          "arg": "data",
+          "type": "object",
+          "http": {
+            "source": "body"
+          }
+        },
+        {
+          "arg": "req",
+          "type": "object",
+          "http": {
+            "source": "req"
+          }
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "object"
+        }
+      ],
+      "http": {
+        "verb": "post",
+        "path" : "/timeTable"
+      }
+    }
+  }
+}
