@@ -26,6 +26,7 @@
           "create": true,
           "find": true,
           "count": true,
+          "delete": true,
           "register": true,
           "updateUser": true,
           "deleteUser": true
