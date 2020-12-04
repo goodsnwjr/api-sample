@@ -36,7 +36,8 @@
     "winston-daily-rotate-file": "^1.7.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node ./server/server.js",
+    "start-apis": "forever stop 0; forever start server/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
