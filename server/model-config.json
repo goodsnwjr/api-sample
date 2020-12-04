@@ -23,15 +23,12 @@
           "*": false,
           "login": true,
           "logout": true,
-          "sig": true,
           "create": true,
-          "profile": true,
           "find": true,
           "count": true,
-          "prototype.patchAttributes": true,
-          "registBuyer": true,
-          "updateBuyer": true,
-          "findBuyerByCode": true
+          "register": true,
+          "updateUser": true,
+          "deleteUser": true
         }
       }
     }

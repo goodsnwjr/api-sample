@@ -31,105 +31,32 @@
   },
   "acls": [
     {
-      "property": "registBuyer",
+      "property": "register",
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW"
     },
     {
-      "property": "updateBuyer",
+      "property": "updateUser",
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW"
     },
     {
-      "property": "findBuyerByCode",
+      "property": "deleteUser",
       "principalType": "ROLE",
       "principalId": "$authenticated",
       "permission": "ALLOW"
     }
   ],
   "methods": {
-    "sig": {
-      "accepts": [
-        {
-          "arg": "userid",
-          "type": "string"
-        },
-        {
-          "arg": "roomid",
-          "type": "string"
-        }
-      ],
-      "returns": {
-        "arg": "result",
-        "type": "object",
-        "root": true
-      },
-      "http": {
-        "path": "/sig",
-        "verb": "get"
-      }
-    },
-    "profile": {
-      "accepts": [
-        {
-          "arg": "req",
-          "type": "object",
-          "http": {
-            "source": "req"
-          }
-        }
-      ],
-      "returns": [
-        {
-          "arg": "result",
-          "type": "object"
-        }
-      ],
-      "http": {
-        "verb": "get"
-      }
-    },
-    "findBuyerByCode": {
-      "accepts": [
-        {
-          "arg": "code",
-          "type": "string"
-        },
-        {
-          "arg": "req",
-          "type": "object",
-          "http": {
-            "source": "req"
-          }
-        }
-      ],
-      "returns": [
-        {
-          "arg": "result",
-          "type": "object"
-        }
-      ],
-      "http": {
-        "verb": "post",
-        "path": "/findBuyer"
-      }
-    },
-    "registBuyer": {
+    "register": {
       "accepts": [
         {
           "arg": "data",
           "type": "object",
           "http": {
             "source": "body"
-          }
-        },
-        {
-          "arg": "req",
-          "type": "object",
-          "http": {
-            "source": "req"
           }
         }
       ],
@@ -143,7 +70,7 @@
         "verb": "post"
       }
     },
-    "updateBuyer": {
+    "updateUser": {
       "accepts": [
         {
           "arg": "id",
@@ -156,13 +83,6 @@
           "http": {
             "source": "body"
           }
-        },
-        {
-          "arg": "req",
-          "type": "object",
-          "http": {
-            "source": "req"
-          }
         }
       ],
       "returns": [
@@ -173,7 +93,26 @@
       ],
       "http": {
         "verb": "post",
-        "path": "/updateBuyer/:id"
+        "path": "/updateUser/:id"
+      }
+    },
+    "deleteUser": {
+      "accepts": [
+        {
+          "arg": "id",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "object"
+        }
+      ],
+      "http": {
+        "verb": "post",
+        "path": "/deleteUser/:id"
       }
     }
   }
