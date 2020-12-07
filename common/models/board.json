@@ -20,6 +20,18 @@
     "end": {
       "type": "date",
       "required": false
+    },
+    "title": {
+      "type": "string", 
+      "required": true
+    },
+    "description": {
+      "type": "string",
+      "required":true
+    },
+    "type": {
+      "type": "string",
+      "required":true
     }
   },
   "validations": [],
@@ -27,33 +39,6 @@
   "acls": [
   ],
   "methods": {
-    "timeTable": {
-      "accepts": [
-        {
-          "arg": "data",
-          "type": "object",
-          "http": {
-            "source": "body"
-          }
-        },
-        {
-          "arg": "req",
-          "type": "object",
-          "http": {
-            "source": "req"
-          }
-        }
-      ],
-      "returns": [
-        {
-          "arg": "result",
-          "type": "object"
-        }
-      ],
-      "http": {
-        "verb": "post",
-        "path" : "/timeTable"
-      }
-    }
+    
   }
 }

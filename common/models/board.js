@@ -4,6 +4,7 @@ module.exports = (Board) => {
   const app = require('../../server/server');
 
   Board.observe('before save', function (context, next) {
+    console.log(context.args);
     const updatedDate = new Date();
 
     if (context.instance) {
@@ -27,7 +28,6 @@ module.exports = (Board) => {
   });
 
   Board.beforeRemote('create', function (context, modelInstance, next) {
-    // context.args.data.ownerId = context.req.userInfo.id.toString();
     return next();
   });
 };

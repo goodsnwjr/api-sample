@@ -11,7 +11,7 @@ module.exports = (User) => {
   User.updateUser = (data, cb) => {
     User.findOne({
       where: {
-        email: data.eamil,
+        email: data.email,
       },
     })
       .then((result) => {
