@@ -72,11 +72,7 @@
     },
     "updateUser": {
       "accepts": [
-        {
-          "arg": "id",
-          "type": "string",
-          "required": true
-        },
+       
         {
           "arg": "data",
           "type": "object",

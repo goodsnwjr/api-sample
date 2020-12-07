@@ -8,9 +8,9 @@ const path = require('path');
 
 var app = (module.exports = loopback());
 
-app.start = function() {
+app.start = function () {
   // start the web server
-  return app.listen(process.env.GW_API_PORT, function() {
+  return app.listen(process.env.GW_API_PORT, function () {
     app.emit('started');
     var baseUrl = app.get('url').replace(/\/$/, '');
     logger.info('Web server listening at: %s', baseUrl);
@@ -23,13 +23,13 @@ app.start = function() {
 
 // Bootstrap the application, configure models, datasources and middleware.
 // Sub-apps like REST API are mounted via boot scripts.
-boot(app, __dirname, function(err) {
+boot(app, __dirname, function (err) {
   if (err) throw err;
 
   app.use(
     loopback.token({
-      model: app.models.accessToken
-    })
+      model: app.models.accessToken,
+    }),
   );
 
   // start the server if `$ node server.js`

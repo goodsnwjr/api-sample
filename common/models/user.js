@@ -8,19 +8,41 @@ module.exports = (User) => {
     return cb(null, newUser);
   };
 
-  User.updateUser = (id, data, cb) => {
-    User.update(
-      {
-        email: id,
+  User.updateUser = (data, cb) => {
+    User.findOne({
+      where: {
+        email: data.eamil,
       },
-      {
-        ...data,
-      },
-      (err, res) => {
-        if (err) return cb(err);
-        return cb(null, res);
-      },
-    );
+    })
+      .then((result) => {
+        if (result) {
+          result.updateAttribute(
+            'password',
+            data.password,
+            function (err, user) {
+              if (user) {
+                User.upsertWithWhere(
+                  {
+                    email: data.email,
+                  },
+                  {
+                    ...data,
+                  },
+                );
+                return cb(null, user);
+              } else {
+                return cb(null, err);
+              }
+            },
+          );
+        } else {
+          return cb(null, 'err');
+        }
+      })
+      .catch((error) => {
+        console.log('User.updateUserPassword : ', error);
+        return cb(null, error);
+      });
   };
 
   User.deleteUser = (id, cb) => {
@@ -90,22 +112,36 @@ module.exports = (User) => {
   });
 
   User.beforeRemote('register', function (context, modelInstance, next) {
-    if (context.args && context.args.data && !context.args.data.level) {
-      context.args.data.level = '1';
+    if (context.args && context.args.data && !context.args.data.grade) {
+      context.args.data.grade = '1';
     }
     return next();
   });
 
   User.beforeRemote('updateUser', function (context, modelInstance, next) {
-    if (!context.args.data) {
-      User.find({ where: { email: context.args.id } }).then((res) => {
-        console.log(res);
-        if (res) {
-          context.args.data = res;
-        }
-        return next();
-      });
-    }
+    // console.log(context.args.data.password);
+    // if (context.args.data) {
+    //   User.findOne({ where: { email: context.args.id } }).then((res) => {
+    //     console.log('res :', res[0].password);
+    //     if (res) {
+    //       if (context.args.data.password !== res[0].password) {
+    //         // User.changePassword(
+    //         //   context.args.data.password,
+    //         //   res[0].id,
+    //         //   res[0].password,
+    //         //   function (err) {
+    //         //     if (err) console.log(err);
+    //         //     return next();
+    //         //   },
+    //         // );
+    //       } else {
+    //         return next();
+    //       }
+    //     } else {
+    //       return next();
+    //     }
+    //   });
+    // }
     return next();
   });
 
