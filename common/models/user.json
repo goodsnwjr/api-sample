@@ -89,7 +89,7 @@
       ],
       "http": {
         "verb": "post",
-        "path": "/updateUser/:id"
+        "path": "/updateUser"
       }
     },
     "deleteUser": {
