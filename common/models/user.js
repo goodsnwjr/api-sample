@@ -142,6 +142,7 @@ module.exports = (User) => {
     //     }
     //   });
     // }
+    console.log(context.args);
     return next();
   });
 
