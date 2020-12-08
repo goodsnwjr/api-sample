@@ -2,10 +2,15 @@
 
 module.exports = (User) => {
   User.register = (data, cb) => {
-    const newUser = User.create({
-      ...data,
-    });
-    return cb(null, newUser);
+    User.create(
+      {
+        ...data,
+      },
+      function (err) {
+        if (err) return cb(null, err);
+        return cb(null, data);
+      },
+    );
   };
 
   User.updateUser = (data, cb) => {
