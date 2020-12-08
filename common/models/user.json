@@ -54,6 +54,25 @@
     }
   ],
   "methods": {
+    "profile": {
+      "accepts": [
+        {
+          "arg": "id",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "returns": [
+        {
+          "arg": "result",
+          "type": "object"
+        }
+      ],
+      "http": {
+        "verb": "get",
+        "path": "/:id"
+      }
+    },
     "register": {
       "accepts": [
         {
@@ -76,7 +95,6 @@
     },
     "updateUser": {
       "accepts": [
-       
         {
           "arg": "data",
           "type": "object",

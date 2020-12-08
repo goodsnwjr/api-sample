@@ -25,6 +25,7 @@
           "logout": true,
           "create": true,
           "find": true,
+          "profile": true,
           "count": true,
           "deleteById": true,
           "register": true,

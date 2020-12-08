@@ -13,6 +13,20 @@ module.exports = (User) => {
     );
   };
 
+  User.profile = (id, cb) => {
+    User.findOne({
+      where: {
+        id: id,
+      },
+    }).then((result) => {
+      if (result) {
+        return cb(null, result);
+      } else {
+        return cb(null, 'no profile');
+      }
+    });
+  };
+
   User.updateUser = (data, cb) => {
     User.findOne({
       where: {
