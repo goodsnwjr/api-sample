@@ -1,6 +1,8 @@
 'use strict';
 
 module.exports = (User) => {
+  const app = require('../../server/server');
+
   User.register = (data, cb) => {
     User.create(
       {
@@ -13,19 +15,19 @@ module.exports = (User) => {
     );
   };
 
-  User.profile = (id, cb) => {
-    User.findOne({
-      where: {
-        id: id,
-      },
-    }).then((result) => {
-      if (result) {
-        return cb(null, result);
-      } else {
-        return cb(null, 'no profile');
-      }
-    });
-  };
+  // User.profile = (id, cb) => {
+  //   User.findOne({
+  //     where: {
+  //       id: id,
+  //     },
+  //   }).then((result) => {
+  //     if (result) {
+  //       return cb(null, result);
+  //     } else {
+  //       return cb(null, 'no profile');
+  //     }
+  //   });
+  // };
 
   User.updateUser = (data, cb) => {
     User.findOne({
@@ -130,4 +132,36 @@ module.exports = (User) => {
         return next(err);
       });
   });
+
+  User.profile = function (req, cb) {
+    const accessToken = app.models.AccessToken;
+    let _user = null;
+
+    accessToken
+      .findOne({
+        where: {
+          _id: req.body.id,
+        },
+      })
+      .then((res) => {
+        if (!res) {
+          return cb(null, 'no user');
+        }
+        User.findOne({
+          where: {
+            _id: res.userId,
+          },
+        })
+          .then((res) => {
+            _user = res;
+            return cb(null, _user);
+          })
+          .catch((err) => {
+            return cb(null, err);
+          });
+      })
+      .catch((err) => {
+        return cb(null, err);
+      });
+  };
 };

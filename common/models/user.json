@@ -57,20 +57,20 @@
     "profile": {
       "accepts": [
         {
-          "arg": "id",
-          "type": "string",
-          "required": true
+          "arg": "req",
+          "type": "object",
+          "http": {
+            "source": "req"
+          }
         }
       ],
-      "returns": [
-        {
-          "arg": "result",
-          "type": "object"
-        }
-      ],
+      "returns": {
+        "arg": "profile",
+        "type": "object",
+        "root": true
+      },
       "http": {
-        "verb": "get",
-        "path": "/:id"
+        "verb": "get"
       }
     },
     "register": {
