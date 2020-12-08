@@ -112,4 +112,22 @@ module.exports = (User) => {
   User.beforeRemote('updateUser', function (context, modelInstance, next) {
     return next();
   });
+
+  User.afterRemote('login', function (context, result, next) {
+    User.findOne({
+      where: {
+        email: context.args.credentials.email,
+      },
+    })
+      .then((res) => {
+        if (!res) {
+          return next('no active user');
+        }
+        result.profile = res;
+        return next();
+      })
+      .catch((err) => {
+        return next(err);
+      });
+  });
 };
