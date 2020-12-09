@@ -33,6 +33,10 @@
       "type": "string",
       "required":true
     },
+    "email": {
+      "type": "string",
+      "required":true
+    },
     "boardIdData": {
       "type": "string",
       "required":false

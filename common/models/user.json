@@ -130,7 +130,7 @@
       ],
       "http": {
         "verb": "post",
-        "path": "/deleteUser/:id"
+        "path": "/deleteUser"
       }
     }
   }
