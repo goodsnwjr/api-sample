@@ -1,5 +1,5 @@
 {
-  "name": "board",
+  "name": "contents",
   "base": "PersistedModel",
   "idInjection": true,
   "hidden": [],
@@ -25,7 +25,7 @@
       "type": "string", 
       "required": true
     },
-    "description": {
+    "contents": {
       "type": "string",
       "required":true
     },
@@ -36,9 +36,9 @@
   },
   "validations": [],
   "relations": {
-    "contents": {
+    "board": {
       "type": "hasMany",
-      "model": "contents",
+      "model": "board",
       "foreignKey": "id"
     }
   },

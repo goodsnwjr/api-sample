@@ -4,7 +4,6 @@ module.exports = (Board) => {
   const app = require('../../server/server');
 
   Board.observe('before save', function (context, next) {
-    console.log(context.args);
     const updatedDate = new Date();
 
     if (context.instance) {

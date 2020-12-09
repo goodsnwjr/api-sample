@@ -61,6 +61,35 @@
   "board": {
     "dataSource": "mongoDs",
     "public": true,
+    "relations": {
+      "user": {
+        "type": "hasMany",
+        "model": "contents",
+        "foreignKey": "id"
+      }
+    },
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "create": true,
+          "find": true,
+          "count": true,
+          "deleteById": true
+        }
+      }
+    }
+  },
+  "contents": {
+    "dataSource": "mongoDs",
+    "public": true,
+    "relations": {
+      "user": {
+        "type": "hasMany",
+        "model": "board",
+        "foreignKey": "id"
+      }
+    },
     "options": {
       "remoting": {
         "sharedMethods": {
