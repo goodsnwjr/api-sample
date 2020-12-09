@@ -27,14 +27,24 @@ module.exports = (Contents) => {
   });
 
   Contents.createPost = (data, cb) => {
-    Contents.create({
-      ...data,
-    })
+    const board = app.models.Board;
+
+    board
+      .findById(data.boardIdData[0], {})
       .then((res) => {
-        return cb(null, res);
+        if (!res) return cb(null, '게시판 존재하지 않음.');
+        Contents.create({
+          ...data,
+        })
+          .then((res) => {
+            return cb(null, res);
+          })
+          .catch((err) => {
+            return cb(null, err);
+          });
       })
       .catch((err) => {
-        return cb(null, err);
+        return cb(null, '게시판 존재하지 않음.');
       });
   };
 
