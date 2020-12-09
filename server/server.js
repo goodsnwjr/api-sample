@@ -2,9 +2,9 @@
 require('dotenv').config();
 
 const logger = require('./logger').logger;
+const ilog = require('./logger').ilog;
 const loopback = require('loopback');
 const boot = require('loopback-boot');
-const path = require('path');
 
 var app = (module.exports = loopback());
 
@@ -34,6 +34,47 @@ boot(app, __dirname, function (err) {
 
   // start the server if `$ node server.js`
   if (require.main === module) {
-    app.start();
+    app.io = require('socket.io')(app.start(), {
+      pingTimeout: 60000,
+    });
+
+    app.io.on('connection', (socket) => {
+      socket.on('authentication', (userAccessToken) => {
+        const AccessToken = app.models.AccessToken;
+
+        AccessToken.findOne({
+          where: {
+            _id: userAccessToken,
+          },
+        }).then(({ userId }) => {
+          socket.join(userId.toString());
+        });
+      });
+
+      socket.on('log', (message) => {
+        if (message.optionName) {
+          ilog.info({
+            remoteAddress: socket.request.socket.remoteAddress,
+            uuid: message.uuid,
+            action: message.action,
+            userAgent: socket.request.headers['user-agent'],
+            productId: message.productId,
+            optionName: message.optionName,
+            id: message.id,
+            storeName: message.storeName,
+          });
+        } else {
+          ilog.info({
+            remoteAddress: socket.request.socket.remoteAddress,
+            uuid: message.uuid,
+            action: message.action,
+            userAgent: socket.request.headers['user-agent'],
+            productId: message.productId,
+            id: message.id,
+            storeName: message.storeName,
+          });
+        }
+      });
+    });
   }
 });

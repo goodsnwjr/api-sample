@@ -4,12 +4,16 @@ const winstonDaily = require('winston-daily-rotate-file');
 const moment = require('moment');
 
 function timeStampFormat() {
-  return moment().format('YYYY-MM-DD HH:mm:ss.SSS ZZ')
+  return moment().format('YYYY-MM-DD HH:mm:ss.SSS ZZ');
 }
 
-const logger = new (winston.Logger)({
+function timeStampFormat2() {
+  return moment().format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+}
+
+const logger = new winston.Logger({
   transports: [
-    new (winstonDaily)({
+    new winstonDaily({
       name: 'info-file',
       filename: './logs/app',
       datePattern: '_yyyy-MM-dd.log',
@@ -19,19 +23,19 @@ const logger = new (winston.Logger)({
       level: 'info',
       showLevel: true,
       json: false,
-      timestamp: timeStampFormat
+      timestamp: timeStampFormat,
     }),
-    new (winston.transports.Console)({
+    new winston.transports.Console({
       name: 'debug-console',
       colorize: true,
       level: 'debug',
       showLevel: true,
       json: false,
-      timestamp: timeStampFormat
-    })
+      timestamp: timeStampFormat,
+    }),
   ],
   exceptionHandlers: [
-    new (winstonDaily)({
+    new winstonDaily({
       name: 'exception-file',
       filename: './logs/app-exception',
       datePattern: '_yyyy-MM-dd.log',
@@ -41,53 +45,67 @@ const logger = new (winston.Logger)({
       level: 'error',
       showLevel: true,
       json: false,
-      timestamp: timeStampFormat
+      timestamp: timeStampFormat,
     }),
-    new (winston.transports.Console)({
+    new winston.transports.Console({
       name: 'exception-console',
       colorize: true,
       level: 'debug',
       showLevel: true,
       json: false,
-      timestamp: timeStampFormat
-    })
-  ]
+      timestamp: timeStampFormat,
+    }),
+  ],
 });
 
-const emailLogger = new (winston.Logger)({
+const ilog = new winston.Logger({
   transports: [
-    new (winstonDaily)({
-      name: 'email-sent-file',
-      filename: './logs/emailSent',
+    new winstonDaily({
+      name: 'info-file',
+      filename: './logs/ilog',
       datePattern: '_yyyy-MM-dd.log',
-      timestamp: timeStampFormat,
-      level: 'info',
-      json: false,
+      colorize: false,
       maxsize: 50000000,
       maxFiles: 1000,
-      prettyPrint: true,
-    })
-  ]
-});
-
-const signUpLoginLogger = new (winston.Logger)({
-  transports: [
-    new (winstonDaily)({
-      name: 'signUpLogin-file',
-      filename: './logs/signUpLogin',
-      datePattern: '_yyyy-MM-dd.log',
-      timestamp: timeStampFormat,
       level: 'info',
+      showLevel: true,
       json: false,
+      timestamp: timeStampFormat2,
+    }),
+    new winston.transports.Console({
+      name: 'debug-console',
+      colorize: true,
+      level: 'debug',
+      showLevel: true,
+      json: false,
+      timestamp: timeStampFormat2,
+    }),
+  ],
+  exceptionHandlers: [
+    new winstonDaily({
+      name: 'exception-file',
+      filename: './logs/ilog-exception',
+      datePattern: '_yyyy-MM-dd.log',
+      colorize: false,
       maxsize: 50000000,
       maxFiles: 1000,
-      prettyPrint: true,
-    })
-  ]
+      level: 'error',
+      showLevel: true,
+      json: false,
+      timestamp: timeStampFormat2,
+    }),
+    new winston.transports.Console({
+      name: 'exception-console',
+      colorize: true,
+      level: 'debug',
+      showLevel: true,
+      json: false,
+      timestamp: timeStampFormat2,
+    }),
+  ],
 });
 
 module.exports = {
   logger: logger,
-  emailLogger: emailLogger,
-  signUpLoginLogger: signUpLoginLogger,
-}
+  ilog: ilog,
+};

@@ -140,7 +140,7 @@ module.exports = (User) => {
     accessToken
       .findOne({
         where: {
-          _id: req.body.id,
+          _id: req.accessToken.id,
         },
       })
       .then((res) => {
