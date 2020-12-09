@@ -26,46 +26,37 @@ module.exports = (Contents) => {
     return next();
   });
 
-  Contents.beforeRemote('create', function (context, modelInstance, next) {
-    const board = app.models.Board;
-    board
-      .findOne({
-        where: {
-          type: context.args.data.type,
-        },
-      })
+  Contents.createPost = (data, cb) => {
+    Contents.create({
+      ...data,
+    })
       .then((res) => {
-        if (!res) {
-          return next('no user');
-        }
-        board
-          .upsert({
-            ...res,
-            contents: context,
-          })
-          .then((res) => {
-            if (!res) {
-              return next('no user');
-            }
-            return next(res);
-          });
-
-        // User.findOne({
-        //   where: {
-        //     _id: res.userId,
-        //   },
-        // })
-        //   .then((res) => {
-        //     _user = res;
-        //     return cb(null, _user);
-        //   })
-        //   .catch((err) => {
-        //     return cb(null, err);
-        //   });
+        return cb(null, res);
       })
       .catch((err) => {
-        return next(err);
+        return cb(null, err);
       });
+  };
+
+  Contents.afterRemote('find', function (context, modelInstance, next) {
+    // const board = app.models.Board;
+    // if (context.result.boardIdData) {
+    //   board
+    //     .findOne({
+    //       where: {
+    //         type: context.args.data.boardIdData,
+    //       },
+    //     })
+    //     .then((res) => {
+    //       if (!res) {
+    //         return next('no board');
+    //       } else {
+    //         return next();
+    //       }
+    //     });
+    // } else {
+    //   return next('게시판이 없음');
+    // }
 
     return next();
   });

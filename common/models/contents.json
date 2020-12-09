@@ -32,6 +32,10 @@
     "type": {
       "type": "string",
       "required":true
+    },
+    "boardIdData": {
+      "type": "string",
+      "required":false
     }
   },
   "validations": [],
@@ -45,6 +49,24 @@
   "acls": [
   ],
   "methods": {
-    
+    "createPost": {
+      "accepts": [
+        {
+          "arg": "data",
+          "type": "object",
+          "http": {
+            "source": "body"
+          }
+        }
+      ],
+      "returns": {
+        "arg": "data",
+        "type": "object",
+        "root": true
+      },
+      "http": {
+        "verb": "post"
+      }
+    }
   }
 }

@@ -97,7 +97,8 @@
           "create": true,
           "find": true,
           "count": true,
-          "deleteById": true
+          "deleteById": true,
+          "createPost": true
         }
       }
     }
