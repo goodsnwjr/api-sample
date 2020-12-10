@@ -82,6 +82,7 @@ module.exports = (User) => {
     return next();
   });
   User.observe('before save', function (context, next) {
+    console.log(context);
     const updatedDate = new Date();
 
     if (context.instance) {

@@ -98,7 +98,8 @@
           "find": true,
           "count": true,
           "deleteById": true,
-          "createPost": true
+          "createPost": true,
+          "createComment": true
         }
       }
     }

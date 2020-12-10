@@ -23,19 +23,19 @@
     },
     "title": {
       "type": "string", 
-      "required": true
+      "required": false
     },
     "contents": {
       "type": "string",
-      "required":true
+      "required":false
     },
     "type": {
       "type": "string",
-      "required":true
+      "required":false
     },
     "email": {
       "type": "string",
-      "required":true
+      "required":false
     },
     "boardIdData": {
       "type": "string",
@@ -61,6 +61,30 @@
           "http": {
             "source": "body"
           }
+        }
+      ],
+      "returns": {
+        "arg": "data",
+        "type": "object",
+        "root": true
+      },
+      "http": {
+        "verb": "post"
+      }
+    },
+    "createComment": {
+      "accepts": [
+        {
+          "arg": "contentsId",
+          "type": "string"
+        },
+        {
+          "arg": "comment",
+          "type": "string"
+        },
+        {
+          "arg": "email",
+          "type": "string"
         }
       ],
       "returns": {

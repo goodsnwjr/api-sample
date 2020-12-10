@@ -5,7 +5,6 @@ module.exports = (Contents) => {
 
   Contents.observe('before save', function (context, next) {
     const updatedDate = new Date();
-
     if (context.instance) {
       if (context.instance.id) {
         delete context.instance['created'];
@@ -35,6 +34,7 @@ module.exports = (Contents) => {
         if (!res) return cb(null, '게시판 존재하지 않음.');
         Contents.create({
           ...data,
+          comment: [],
         })
           .then((res) => {
             return cb(null, res);
@@ -47,6 +47,55 @@ module.exports = (Contents) => {
         return cb(null, '게시판 존재하지 않음.');
       });
   };
+
+  Contents.createComment = (contentsId, comment, email, cb) => {
+    Contents.findById(contentsId, {})
+      .then((res) => {
+        res.comment.push({ email, comment });
+        let comments = res.comment;
+        Contents.update({
+          comment: comments,
+        });
+        return cb(null, res);
+      })
+      .catch((err) => {
+        return cb(null, err);
+      });
+  };
+
+  Contents.afterRemote(
+    'createComment',
+    function (context, modelInstance, next) {
+      if (context.args.contentsId) {
+        Contents.findById(context.args.contentsId, {})
+          .then((res) => {
+            // context.result.comment = [];
+            // modelInstance.comment.push(context.args.comment);
+            return next();
+          })
+          .catch((err) => {
+            return next(err);
+          });
+      } else {
+        return next();
+      }
+    },
+  );
+
+  Contents.beforeRemote(
+    'createComment',
+    function (context, modelInstance, next) {
+      let comment = context.args.comment;
+      // return next();
+      if (context.args.contentsId) {
+        // context.args.comment = [];
+        // context.args.comment.push(comment);
+        return next();
+      } else {
+        return next();
+      }
+    },
+  );
 
   Contents.afterRemote('find', function (context, modelInstance, next) {
     // const board = app.models.Board;
