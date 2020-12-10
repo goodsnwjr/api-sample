@@ -27,6 +27,13 @@ module.exports = (Board) => {
   });
 
   Board.beforeRemote('create', function (context, modelInstance, next) {
-    return next();
+    Board.findOne({
+      where: {
+        title: context.args.data.title,
+      },
+    }).then((res) => {
+      if (res) return next('이미 있는 게시판입니다');
+      else return next();
+    });
   });
 };
