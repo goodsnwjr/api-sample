@@ -30,7 +30,7 @@ module.exports = function (app) {
   });
 
   //log a user out
-  app.get('/logout', function (req, res, next) {
+  app.get('/logout', function (req, res, next, cb) {
     if (!req.accessToken) return res.sendStatus(401);
     User.logout(req.accessToken.id, function (err) {
       if (err) return next(err);

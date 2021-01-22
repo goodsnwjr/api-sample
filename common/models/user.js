@@ -152,6 +152,24 @@ module.exports = (User) => {
       });
   });
 
+  User.remoteMethod('login', {
+    accepts: {
+      arg: 'credentials',
+      type: { email: 'string', password: 'string' },
+      required: true,
+      http: { source: 'body' },
+    },
+  });
+
+  User.remoteMethod('logout', {
+    accepts: {
+      arg: 'credentials',
+      type: { access_token: 'string' },
+      required: true,
+      http: { source: 'body' },
+    },
+  });
+
   User.profile = function (req, cb) {
     const accessToken = app.models.AccessToken;
     let _user = null;
