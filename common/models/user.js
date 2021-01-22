@@ -15,6 +15,15 @@ module.exports = (User) => {
     );
   };
 
+  User.remoteMethod('register', {
+    accepts: {
+      arg: 'credentials',
+      type: { email: 'string', password: 'string' },
+      required: true,
+      http: { source: 'body' },
+    },
+  });
+
   // User.profile = (id, cb) => {
   //   User.findOne({
   //     where: {
@@ -66,6 +75,15 @@ module.exports = (User) => {
       });
   };
 
+  User.remoteMethod('updateUser', {
+    accepts: {
+      arg: 'credentials',
+      type: { email: 'string', password: 'string' },
+      required: true,
+      http: { source: 'body' },
+    },
+  });
+
   User.deleteUser = (id, cb) => {
     User.destroyAll(
       {
@@ -106,9 +124,9 @@ module.exports = (User) => {
   });
 
   User.beforeRemote('register', function (context, modelInstance, next) {
-    if (context.args && context.args.data && !context.args.data.grade) {
-      context.args.data.grade = '1';
-    }
+    // if (context.args && context.args.data && !context.args.data.grade) {
+    //   context.args.data.grade = '1';
+    // }
     return next();
   });
 

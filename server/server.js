@@ -10,7 +10,7 @@ var app = (module.exports = loopback());
 
 app.start = function () {
   // start the web server
-  return app.listen(process.env.GW_API_PORT, function () {
+  return app.listen(33366, function () {
     app.emit('started');
     var baseUrl = app.get('url').replace(/\/$/, '');
     logger.info('Web server listening at: %s', baseUrl);

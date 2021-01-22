@@ -16,10 +16,6 @@
     "updated": {
       "type": "date",
       "required": false
-    },
-    "grade": {
-      "type": "string",
-      "required": true
     }
   },
   "validations": [],
