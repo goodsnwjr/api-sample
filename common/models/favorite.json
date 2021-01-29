@@ -1,0 +1,62 @@
+{
+  "name": "favorite",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "hidden": [],
+  "options": {
+    "validateUpsert": true,
+    "strictObjectIDCoercion": true,
+    "allowEternalTokens": true
+  },
+  "properties": {
+    "created": {
+      "type": "date",
+      "required": false
+    },
+    "start": {
+      "type": "date",
+      "required": false
+    },
+    "end": {
+      "type": "date",
+      "required": false
+    },
+    "userId":{
+      "type" : "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "user": {
+      "type": "hasMany",
+      "model": "user",
+      "foreignKey": "id"
+    }
+  },
+  "acls": [
+  ],
+  "methods": {
+    "addFavorite": {
+      "accepts": [
+        {
+          "arg": "userId",
+          "type": "string"
+        },
+        {
+          "arg": "videoId",
+          "type": "array"
+        }
+      ],
+      "returns": {
+        "arg": "data",
+        "type": "object",
+        "root": true
+      },
+      "http": {
+        "verb": "post",
+        "path": "/addFavorite"
+      }
+    }
+  }
+}

@@ -80,6 +80,28 @@
       }
     }
   },
+  "favorite": {
+    "dataSource": "mongoDs",
+    "public": true,
+    "relations": {
+      "user": {
+        "type": "hasMany",
+        "model": "favorite",
+        "foreignKey": "id"
+      }
+    },
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "create": true,
+          "find": true,
+          "count": true,
+          "addFavorite":true
+        }
+      }
+    }
+  },
   "contents": {
     "dataSource": "mongoDs",
     "public": true,
