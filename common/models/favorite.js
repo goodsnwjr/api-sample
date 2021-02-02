@@ -37,16 +37,15 @@ module.exports = (Favorite) => {
   });
 
   Favorite.addFavorite = (userId, videoId, cb) => {
-    const user = app.models.User;
-    user
-      .findOne({
-        where: {
-          id: userId,
-        },
-      })
+    const User = app.models.User;
+    User.findOne({
+      where: {
+        id: userId,
+      },
+    })
       .then((res) => {
+        if (!res) return cb(null, '존재하지 않는 계정입니다.');
         Favorite.find({ where: { userId: userId } }).then((res) => {
-          console.log(res);
           if (res.length) {
             Favorite.updateAll(
               { userId: userId },
@@ -64,13 +63,11 @@ module.exports = (Favorite) => {
               },
               function (err) {
                 if (err) return cb(null, err);
-                return cb(null, videoId);
+                return cb(null, { userId: userId, videoId: videoId });
               },
             );
           }
         });
-
-        // return cb(null, res);
       })
       .catch((err) => {
         return cb(null, err);
